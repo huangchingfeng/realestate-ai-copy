@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>房仲 AI 文案生成器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00D4FF;
+      --primary-dark: #00a8cc;
+      --bg-dark: #0A1628;
+      --accent: #FF6B35;
+      --bg-light: #f5f7fa;
+      --card-bg: #ffffff;
+      --text-dark: #1a1a2e;
+      --text-gray: #6b7280;
+      --border: #e5e7eb;
+      --success: #10b981;
+      --error: #ef4444;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-dark);
+      color: white;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    header h1 span { color: var(--primary); }
+    header p { color: #94a3b8; font-size: 0.9rem; }
+
+    /* Container */
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .step-badge {
+      background: var(--primary);
+      color: var(--bg-dark);
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-gray);
+      margin-bottom: 0.25rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 70px; }
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    /* Feature tags */
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .feature-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .feature-tag input[type="checkbox"] { display: none; }
+    .feature-tag label {
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    .feature-tag input:checked + label {
+      background: var(--primary);
+      color: var(--bg-dark);
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Photo upload */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--primary);
+      background: rgba(0,212,255,0.03);
+    }
+    .upload-zone .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .upload-zone .hint { color: var(--text-gray); font-size: 0.85rem; }
+    .upload-zone .sub-hint { color: #9ca3af; font-size: 0.75rem; margin-top: 0.25rem; }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .photo-previews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    .photo-preview {
+      position: relative;
+      width: 100px; height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .photo-preview img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .photo-preview .remove-btn {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Platform checkboxes */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    .platform-option input { display: none; }
+    .platform-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.75rem 0.5rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .platform-option label .p-icon { font-size: 1.5rem; }
+    .platform-option label .p-name { font-size: 0.8rem; font-weight: 500; }
+    .platform-option input:checked + label {
+      border-color: var(--primary);
+      background: rgba(0,212,255,0.05);
+    }
+
+    /* Buttons */
+    .btn-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: var(--bg-dark);
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-gray);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* API Key */
+    .api-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+    .api-row .form-group { flex: 1; }
+    .api-row a {
+      color: var(--primary);
+      font-size: 0.8rem;
+      text-decoration: none;
+      white-space: nowrap;
+      padding-bottom: 0.7rem;
+    }
+    .api-row a:hover { text-decoration: underline; }
+
+    /* Results */
+    .result-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-header h3 {
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .result-actions { display: flex; gap: 0.5rem; }
+    .btn-copy, .btn-regen {
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      background: white;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { border-color: var(--success); color: var(--success); }
+    .btn-regen:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-copy.copied {
+      background: var(--success);
+      color: white;
+      border-color: var(--success);
+    }
+    .result-body {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Loading */
+    .loading-card {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-gray);
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 0.75rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--bg-dark);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      box-shadow: var(--shadow-lg);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      color: #9ca3af;
+      font-size: 0.8rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      header h1 { font-size: 1.35rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+      .platform-grid { grid-template-columns: repeat(2, 1fr); }
+      .btn-row { flex-direction: column; }
+      .btn-primary { width: 100%; }
+      .api-row { flex-direction: column; align-items: stretch; }
+      .api-row a { padding-bottom: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🏠 房仲 <span>AI 文案</span>生成器</h1>
+  <p>上傳房屋照片、填入物件資料，一鍵生成多平台行銷文案</p>
+</header>
+
+<div class="container">
+
+  <!-- API Key (hidden, pre-configured) -->
+  <input type="hidden" id="apiKey" value="AIzaSyBosBG4s5cYEYQm-7gGEH-oClQQ5tr0WPU" />
+
+  <!-- Step 1: Photos -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">1</span> 上傳房屋照片（選填）</div>
+    <div class="upload-zone" id="uploadZone">
+      <div class="icon">📷</div>
+      <div class="hint">點擊或拖曳照片到這裡</div>
+      <div class="sub-hint">支援 JPG、PNG，最多 5 張</div>
+      <input type="file" id="fileInput" accept="image/*" multiple />
+    </div>
+    <div class="photo-previews" id="photoPreviews"></div>
+  </div>
+
+  <!-- Step 2: Property Info -->
+  <div class="card">
+    <div class="card-title">
+      <span class="step-badge">2</span> 物件資訊
+      <button class="btn-secondary" onclick="fillSample()" style="margin-left:auto; font-size:0.78rem;">填入範例</button>
+    </div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>物件名稱</label>
+        <input type="text" id="propName" placeholder="例：信義區全新裝潢景觀兩房" />
+      </div>
+      <div class="form-group full">
+        <label>地址 / 區域</label>
+        <input type="text" id="propAddr" placeholder="例：台北市信義區松仁路 88 號" />
+      </div>
+      <div class="form-group">
+        <label>物件類型</label>
+        <select id="propType">
+          <option value="大樓">大樓</option>
+          <option value="公寓">公寓</option>
+          <option value="透天">透天厝</option>
+          <option value="套房">套房</option>
+          <option value="店面">店面</option>
+          <option value="辦公室">辦公室</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>坪數</label>
+        <input type="number" id="propSize" placeholder="28" />
+      </div>
+      <div class="form-group full">
+        <label>格局（房 / 廳 / 衛）</label>
+        <div class="form-row-3">
+          <input type="number" id="propRooms" placeholder="房" />
+          <input type="number" id="propLiving" placeholder="廳" />
+          <input type="number" id="propBath" placeholder="衛" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>樓層</label>
+        <input type="text" id="propFloor" placeholder="例：12F / 24F" />
+      </div>
+      <div class="form-group">
+        <label>屋齡（年）</label>
+        <input type="number" id="propAge" placeholder="8" />
+      </div>
+      <div class="form-group full">
+        <label>開價（萬元）</label>
+        <input type="number" id="propPrice" placeholder="1580" />
+      </div>
+      <div class="form-group full">
+        <label>物件特色（可複選）</label>
+        <div class="feature-tags" id="featureTags">
+          <span class="feature-tag"><input type="checkbox" id="f1" value="近捷運"><label for="f1">近捷運</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f2" value="有車位"><label for="f2">有車位</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f3" value="採光佳"><label for="f3">採光佳</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f4" value="全新裝潢"><label for="f4">全新裝潢</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f5" value="邊間"><label for="f5">邊間</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f6" value="低公設"><label for="f6">低公設</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f7" value="有陽台"><label for="f7">有陽台</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f8" value="學區宅"><label for="f8">學區宅</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f9" value="景觀戶"><label for="f9">景觀戶</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f10" value="近商圈"><label for="f10">近商圈</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f11" value="靜巷"><label for="f11">靜巷</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f12" value="管理佳"><label for="f12">管理佳</label></span>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>補充說明</label>
+        <textarea id="propNotes" placeholder="其他想強調的賣點，例如：步行5分鐘到捷運、鄰近公園、剛換全新廚具..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Platforms -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">3</span> 選擇生成平台</div>
+    <div class="platform-grid">
+      <div class="platform-option">
+        <input type="checkbox" id="p591" checked>
+        <label for="p591"><span class="p-icon">🏢</span><span class="p-name">591 售屋</span></label>
+      </div>
+      <div class="platform-option">
+        <input type="checkbox" id="pFB" checked>
+        <label for="pFB"><span class="p-icon">📘</span><span class="p-name">Facebook</span></label>
+      </div>
+      <div class="platform-option">
+        <input type="checkbox" id="pIG" checked>
+        <label for="pIG"><span class="p-icon">📸</span><span class="p-name">Instagram</span></label>
+      </div>
+      <div class="platform-option">
+        <input type="checkbox" id="pLINE" checked>
+        <label for="pLINE"><span class="p-icon">💬</span><span class="p-name">LINE</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate -->
+  <div class="card">
+    <div class="btn-row">
+      <button class="btn-primary" id="btnGenerate" onclick="generate()">生成文案</button>
+      <button class="btn-secondary" onclick="clearResults()">清除結果</button>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="results"></div>
+
+</div>
+
+<footer>
+  Powered by Gemini AI ｜ Built by <a href="https://www.autolab.cloud" target="_blank">AutoLab 阿峰老師</a>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 全域變數 =====
+const uploadedImages = []; // { file, base64, type }
+
+// ===== 初始化 =====
+// API Key 已預設填入
+
+// ===== 照片上傳 =====
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+
+uploadZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+uploadZone.addEventListener('dragleave', () => {
+  uploadZone.classList.remove('dragover');
+});
+uploadZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', (e) => {
+  handleFiles(e.target.files);
+  fileInput.value = '';
+});
+
+function handleFiles(files) {
+  for (const file of files) {
+    if (uploadedImages.length >= 5) {
+      showToast('最多上傳 5 張照片');
+      break;
+    }
+    if (!file.type.startsWith('image/')) continue;
+    resizeAndStore(file);
+  }
+}
+
+function resizeAndStore(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      // 壓縮到最大 1024px
+      const MAX = 1024;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        const ratio = Math.min(MAX / w, MAX / h);
+        w = Math.round(w * ratio);
+        h = Math.round(h * ratio);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      const base64 = dataUrl.split(',')[1];
+      uploadedImages.push({ base64, type: 'image/jpeg', preview: dataUrl });
+      renderPreviews();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderPreviews() {
+  const container = document.getElementById('photoPreviews');
+  container.innerHTML = uploadedImages.map((img, i) => `
+    <div class="photo-preview">
+      <img src="${img.preview}" alt="照片 ${i + 1}">
+      <button class="remove-btn" onclick="removePhoto(${i})">✕</button>
+    </div>
+  `).join('');
+}
+
+function removePhoto(index) {
+  uploadedImages.splice(index, 1);
+  renderPreviews();
+}
+
+// ===== 填入範例 =====
+function fillSample() {
+  document.getElementById('propName').value = '信義區全新裝潢景觀兩房';
+  document.getElementById('propAddr').value = '台北市信義區松仁路 88 號';
+  document.getElementById('propType').value = '大樓';
+  document.getElementById('propSize').value = '28';
+  document.getElementById('propRooms').value = '2';
+  document.getElementById('propLiving').value = '1';
+  document.getElementById('propBath').value = '1';
+  document.getElementById('propFloor').value = '12F / 24F';
+  document.getElementById('propAge').value = '8';
+  document.getElementById('propPrice').value = '1580';
+  document.getElementById('propNotes').value = '步行5分鐘到捷運象山站，鄰近信義商圈，客廳落地窗可看101夜景，剛完成全屋裝潢含全新廚具家電';
+  ['f1','f3','f4','f9','f10','f12'].forEach(id => {
+    document.getElementById(id).checked = true;
+  });
+  showToast('已填入範例資料');
+}
+
+// ===== 組裝物件資訊文字 =====
+function getPropertyInfo() {
+  const name = document.getElementById('propName').value.trim();
+  const addr = document.getElementById('propAddr').value.trim();
+  const type = document.getElementById('propType').value;
+  const size = document.getElementById('propSize').value;
+  const rooms = document.getElementById('propRooms').value;
+  const living = document.getElementById('propLiving').value;
+  const bath = document.getElementById('propBath').value;
+  const floor = document.getElementById('propFloor').value.trim();
+  const age = document.getElementById('propAge').value;
+  const price = document.getElementById('propPrice').value;
+  const notes = document.getElementById('propNotes').value.trim();
+
+  const features = [];
+  document.querySelectorAll('#featureTags input:checked').forEach(cb => {
+    features.push(cb.value);
+  });
+
+  let info = '';
+  if (name) info += `物件名稱：${name}\n`;
+  if (addr) info += `地址：${addr}\n`;
+  info += `類型：${type}\n`;
+  if (size) info += `坪數：${size} 坪\n`;
+  if (rooms || living || bath) info += `格局：${rooms || '?'}房${living || '?'}廳${bath || '?'}衛\n`;
+  if (floor) info += `樓層：${floor}\n`;
+  if (age) info += `屋齡：${age} 年\n`;
+  if (price) info += `開價：${price} 萬元\n`;
+  if (features.length) info += `特色：${features.join('、')}\n`;
+  if (notes) info += `補充：${notes}\n`;
+  return info;
+}
+
+// ===== 各平台 Prompt =====
+const platformConfig = {
+  '591': {
+    id: 'p591',
+    icon: '🏢',
+    name: '591 售屋網',
+    prompt: `你是一位台灣資深房仲，擅長撰寫 591 售屋網的物件文案。
+根據以下房屋資訊和照片，撰寫一份專業的 591 物件描述。
+
+要求：
+1. 先寫一個 20 字以內的吸引人標題
+2. 正文 300-500 字，包含：生活機能、格局優勢、裝潢狀況、社區管理
+3. 條列重點規格
+4. 語氣專業、詳實
+5. 結尾加上「歡迎來電預約看屋」
+6. 使用繁體中文、台灣用語`
+  },
+  'FB': {
+    id: 'pFB',
+    icon: '📘',
+    name: 'Facebook 貼文',
+    prompt: `你是一位房仲社群行銷專家。根據以下房屋資訊和照片，撰寫一篇 Facebook 貼文。
+
+要求：
+1. 用 emoji 開頭，前兩行就要吸引目光（FB 會摺疊）
+2. 條列 3-5 個賣點
+3. 加入 5-8 個 hashtag
+4. 結尾放行動呼籲（私訊、留言+1、來電）
+5. 字數 150-250 字
+6. 語氣親切有溫度，像朋友推薦好房
+7. 使用繁體中文、台灣用語`
+  },
+  'IG': {
+    id: 'pIG',
+    icon: '📸',
+    name: 'Instagram 貼文',
+    prompt: `你是一位房仲 Instagram 行銷專家。根據以下房屋資訊和照片，撰寫 IG 貼文。
+
+要求：
+1. 簡短有力的正文（80-120 字）
+2. 適當使用 emoji，換行清楚
+3. 正文後面加 15-20 個 hashtag，包含 #房仲 #買房 #[區域] 等
+4. 語氣年輕有活力
+5. 使用繁體中文、台灣用語`
+  },
+  'LINE': {
+    id: 'pLINE',
+    icon: '💬',
+    name: 'LINE 訊息',
+    prompt: `你是一位房仲 LINE 行銷專家。根據以下房屋資訊和照片，撰寫一則可以群發給客戶的 LINE 訊息。
+
+要求：
+1. 開頭簡短問候
+2. 3-4 個物件亮點
+3. 附上基本規格（坪數、格局、價格）
+4. 結尾邀約看屋
+5. 字數 100-150 字
+6. 語氣像私人推薦，專業但親切
+7. 使用繁體中文、台灣用語`
+  }
+};
+
+// ===== 呼叫 Gemini API =====
+async function callGemini(propertyInfo, platform) {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+  const parts = [];
+
+  // 加入照片
+  for (const img of uploadedImages) {
+    parts.push({
+      inline_data: {
+        mime_type: img.type,
+        data: img.base64
+      }
+    });
+  }
+
+  // 加入文字 prompt
+  const config = platformConfig[platform];
+  parts.push({
+    text: `${config.prompt}\n\n【物件資訊】\n${propertyInfo}`
+  });
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts }],
+      generationConfig: {
+        temperature: 0.8,
+        maxOutputTokens: 1024
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error?.message || `API 錯誤 (${response.status})`);
+  }
+
+  const data = await response.json();
+  if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
+    throw new Error('AI 未回傳有效內容');
+  }
+  return data.candidates[0].content.parts[0].text;
+}
+
+// ===== 生成文案 =====
+async function generate() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+
+  // 檢查至少填了物件名稱或地址
+  const propName = document.getElementById('propName').value.trim();
+  const propAddr = document.getElementById('propAddr').value.trim();
+  if (!propName && !propAddr) {
+    showToast('請至少填寫物件名稱或地址');
+    return;
+  }
+
+  // 取得選中的平台
+  const selectedPlatforms = Object.keys(platformConfig).filter(key => {
+    return document.getElementById(platformConfig[key].id).checked;
+  });
+  if (selectedPlatforms.length === 0) {
+    showToast('請至少選擇一個平台');
+    return;
+  }
+
+  const propertyInfo = getPropertyInfo();
+  const resultsDiv = document.getElementById('results');
+  const btn = document.getElementById('btnGenerate');
+  btn.disabled = true;
+  btn.textContent = '生成中...';
+
+  // 顯示 loading
+  resultsDiv.innerHTML = selectedPlatforms.map(p => `
+    <div class="result-card" id="result-${p}">
+      <div class="result-header">
+        <h3>${platformConfig[p].icon} ${platformConfig[p].name}</h3>
+      </div>
+      <div class="loading-card">
+        <div class="spinner"></div>
+        <div>AI 正在撰寫文案...</div>
+      </div>
+    </div>
+  `).join('');
+
+  // 逐一生成（避免同時太多 API 呼叫）
+  for (const platform of selectedPlatforms) {
+    try {
+      const text = await callGemini(propertyInfo, platform);
+      renderResult(platform, text);
+    } catch (err) {
+      renderError(platform, err.message);
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '生成文案';
+  showToast('文案生成完成！');
+}
+
+// ===== 顯示結果 =====
+function renderResult(platform, text) {
+  const config = platformConfig[platform];
+  const card = document.getElementById(`result-${platform}`);
+  if (!card) return;
+  card.innerHTML = `
+    <div class="result-header">
+      <h3>${config.icon} ${config.name}</h3>
+      <div class="result-actions">
+        <button class="btn-copy" onclick="copyText(this, '${platform}')">複製</button>
+        <button class="btn-regen" onclick="regenerate('${platform}')">重新生成</button>
+      </div>
+    </div>
+    <div class="result-body" id="text-${platform}">${escapeHtml(text)}</div>
+  `;
+}
+
+function renderError(platform, message) {
+  const config = platformConfig[platform];
+  const card = document.getElementById(`result-${platform}`);
+  if (!card) return;
+  card.innerHTML = `
+    <div class="result-header">
+      <h3>${config.icon} ${config.name}</h3>
+      <div class="result-actions">
+        <button class="btn-regen" onclick="regenerate('${platform}')">重試</button>
+      </div>
+    </div>
+    <div class="result-body" style="color:var(--error)">生成失敗：${escapeHtml(message)}</div>
+  `;
+}
+
+// ===== 複製文案 =====
+function copyText(btn, platform) {
+  const textEl = document.getElementById(`text-${platform}`);
+  if (!textEl) return;
+  navigator.clipboard.writeText(textEl.textContent).then(() => {
+    btn.textContent = '已複製！';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '複製';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ===== 重新生成單一平台 =====
+async function regenerate(platform) {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) return;
+
+  const card = document.getElementById(`result-${platform}`);
+  const config = platformConfig[platform];
+  card.innerHTML = `
+    <div class="result-header">
+      <h3>${config.icon} ${config.name}</h3>
+    </div>
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <div>重新生成中...</div>
+    </div>
+  `;
+
+  try {
+    const text = await callGemini(getPropertyInfo(), platform);
+    renderResult(platform, text);
+  } catch (err) {
+    renderError(platform, err.message);
+  }
+}
+
+// ===== 清除結果 =====
+function clearResults() {
+  document.getElementById('results').innerHTML = '';
+}
+
+// ===== 工具函數 =====
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
+</body>
+</html>
