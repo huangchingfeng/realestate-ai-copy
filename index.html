@@ -28,30 +28,16 @@
       color: var(--text-dark);
       line-height: 1.6;
     }
-
-    /* Header */
     header {
       background: var(--bg-dark);
       color: white;
       padding: 2rem 1.5rem;
       text-align: center;
     }
-    header h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
+    header h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
     header h1 span { color: var(--primary); }
     header p { color: #94a3b8; font-size: 0.9rem; }
-
-    /* Container */
-    .container {
-      max-width: 880px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-
-    /* Card */
+    .container { max-width: 880px; margin: 0 auto; padding: 1.5rem; }
     .card {
       background: var(--card-bg);
       border-radius: 12px;
@@ -60,27 +46,16 @@
       box-shadow: var(--shadow);
     }
     .card-title {
-      font-size: 1.05rem;
-      font-weight: 600;
+      font-size: 1.05rem; font-weight: 600;
       margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
     .step-badge {
-      background: var(--primary);
-      color: var(--bg-dark);
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      flex-shrink: 0;
+      background: var(--primary); color: var(--bg-dark);
+      width: 26px; height: 26px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
     }
-
-    /* Form */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -88,305 +63,241 @@
     }
     .form-grid .full { grid-column: 1 / -1; }
     .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-gray);
-      margin-bottom: 0.25rem;
+      display: block; font-size: 0.8rem; font-weight: 500;
+      color: var(--text-gray); margin-bottom: 0.25rem;
     }
     .form-group input,
     .form-group select,
     .form-group textarea {
-      width: 100%;
-      padding: 0.6rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-family: inherit;
+      width: 100%; padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 0.9rem; font-family: inherit;
       transition: border-color 0.2s;
     }
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
-      outline: none;
-      border-color: var(--primary);
+      outline: none; border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(0,212,255,0.1);
     }
     .form-group textarea { resize: vertical; min-height: 70px; }
     .form-row-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.5rem;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;
+    }
+
+    /* Toggle Tabs（售/租） */
+    .toggle-tabs {
+      display: inline-flex; border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden;
+    }
+    .toggle-tabs input { display: none; }
+    .toggle-tabs label {
+      padding: 0.5rem 1.25rem; cursor: pointer;
+      font-size: 0.85rem; font-weight: 500;
+      transition: all 0.2s; user-select: none;
+      border-right: 1px solid var(--border);
+    }
+    .toggle-tabs label:last-of-type { border-right: none; }
+    .toggle-tabs input:checked + label {
+      background: var(--primary); color: var(--bg-dark); font-weight: 700;
+    }
+
+    /* Tone Cards */
+    .tone-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;
+    }
+    .tone-option input { display: none; }
+    .tone-option label {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0.6rem 0.25rem; border: 2px solid var(--border);
+      border-radius: 10px; cursor: pointer; transition: all 0.2s;
+      text-align: center; gap: 0.15rem;
+    }
+    .tone-option label .t-icon { font-size: 1.25rem; }
+    .tone-option label .t-name { font-size: 0.75rem; font-weight: 500; }
+    .tone-option label .t-desc { font-size: 0.65rem; color: var(--text-gray); }
+    .tone-option input:checked + label {
+      border-color: var(--primary); background: rgba(0,212,255,0.05);
     }
 
     /* Feature tags */
-    .feature-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .feature-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
+    .feature-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .feature-tag { display: inline-flex; align-items: center; gap: 0.25rem; }
     .feature-tag input[type="checkbox"] { display: none; }
     .feature-tag label {
-      padding: 0.35rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      user-select: none;
+      padding: 0.35rem 0.75rem; border: 1px solid var(--border);
+      border-radius: 20px; font-size: 0.8rem; cursor: pointer;
+      transition: all 0.2s; user-select: none;
     }
     .feature-tag input:checked + label {
-      background: var(--primary);
-      color: var(--bg-dark);
-      border-color: var(--primary);
-      font-weight: 600;
+      background: var(--primary); color: var(--bg-dark);
+      border-color: var(--primary); font-weight: 600;
+    }
+    /* 鉤子標籤用橘色 */
+    .feature-tag.hook input:checked + label {
+      background: var(--accent); border-color: var(--accent); color: white;
+    }
+    .tag-section-title {
+      width: 100%; font-size: 0.75rem; color: var(--text-gray);
+      margin-top: 0.25rem; margin-bottom: -0.15rem;
     }
 
     /* Photo upload */
     .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      position: relative;
+      border: 2px dashed var(--border); border-radius: 12px;
+      padding: 2rem; text-align: center; cursor: pointer;
+      transition: all 0.2s; position: relative;
     }
-    .upload-zone:hover,
-    .upload-zone.dragover {
-      border-color: var(--primary);
-      background: rgba(0,212,255,0.03);
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--primary); background: rgba(0,212,255,0.03);
     }
     .upload-zone .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
     .upload-zone .hint { color: var(--text-gray); font-size: 0.85rem; }
     .upload-zone .sub-hint { color: #9ca3af; font-size: 0.75rem; margin-top: 0.25rem; }
     .upload-zone input[type="file"] {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      cursor: pointer;
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
     }
-    .photo-previews {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
+    .photo-previews { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
     .photo-preview {
-      position: relative;
-      width: 100px; height: 100px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
+      position: relative; width: 100px; height: 100px;
+      border-radius: 8px; overflow: hidden; box-shadow: var(--shadow);
     }
-    .photo-preview img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
+    .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
     .photo-preview .remove-btn {
-      position: absolute;
-      top: 4px; right: 4px;
-      width: 22px; height: 22px;
-      background: rgba(0,0,0,0.6);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 0.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 4px; right: 4px;
+      width: 22px; height: 22px; background: rgba(0,0,0,0.6);
+      color: white; border: none; border-radius: 50%;
+      cursor: pointer; font-size: 0.7rem;
+      display: flex; align-items: center; justify-content: center;
     }
 
     /* Platform checkboxes */
     .platform-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.75rem;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem;
     }
     .platform-option input { display: none; }
     .platform-option label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.75rem 0.5rem;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
+      display: flex; flex-direction: column; align-items: center; gap: 0.25rem;
+      padding: 0.65rem 0.25rem; border: 2px solid var(--border);
+      border-radius: 10px; cursor: pointer; transition: all 0.2s;
       text-align: center;
     }
-    .platform-option label .p-icon { font-size: 1.5rem; }
-    .platform-option label .p-name { font-size: 0.8rem; font-weight: 500; }
+    .platform-option label .p-icon { font-size: 1.3rem; }
+    .platform-option label .p-name { font-size: 0.72rem; font-weight: 500; }
     .platform-option input:checked + label {
-      border-color: var(--primary);
-      background: rgba(0,212,255,0.05);
+      border-color: var(--primary); background: rgba(0,212,255,0.05);
     }
 
     /* Buttons */
-    .btn-row {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+    .btn-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
     .btn-primary {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: var(--bg-dark);
-      border: none;
-      padding: 0.75rem 2rem;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-family: inherit;
+      color: var(--bg-dark); border: none;
+      padding: 0.75rem 2rem; border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
     }
     .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-    .btn-primary:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
     .btn-secondary {
-      background: transparent;
-      color: var(--text-gray);
+      background: transparent; color: var(--text-gray);
       border: 1px solid var(--border);
-      padding: 0.6rem 1.25rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.2s;
+      padding: 0.6rem 1.25rem; border-radius: 8px;
+      font-size: 0.85rem; cursor: pointer;
+      font-family: inherit; transition: all 0.2s;
     }
     .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* API Key */
-    .api-row {
-      display: flex;
-      gap: 0.5rem;
-      align-items: flex-end;
-    }
-    .api-row .form-group { flex: 1; }
-    .api-row a {
-      color: var(--primary);
-      font-size: 0.8rem;
-      text-decoration: none;
-      white-space: nowrap;
-      padding-bottom: 0.7rem;
-    }
-    .api-row a:hover { text-decoration: underline; }
-
     /* Results */
     .result-card {
-      background: var(--card-bg);
-      border-radius: 12px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-      box-shadow: var(--shadow);
-      animation: fadeIn 0.3s ease;
+      background: var(--card-bg); border-radius: 12px;
+      padding: 1.25rem; margin-bottom: 1rem;
+      box-shadow: var(--shadow); animation: fadeIn 0.3s ease;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .result-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.75rem;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.75rem; padding-bottom: 0.75rem;
       border-bottom: 1px solid var(--border);
     }
     .result-header h3 {
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+      font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem;
     }
-    .result-actions { display: flex; gap: 0.5rem; }
+    .result-actions { display: flex; gap: 0.5rem; align-items: center; }
+    .word-count {
+      font-size: 0.72rem; color: var(--text-gray);
+      background: var(--bg-light); padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
     .btn-copy, .btn-regen {
-      padding: 0.35rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      font-family: inherit;
-      border: 1px solid var(--border);
-      background: white;
+      padding: 0.35rem 0.75rem; border-radius: 6px;
+      font-size: 0.78rem; cursor: pointer; font-family: inherit;
+      border: 1px solid var(--border); background: white;
       transition: all 0.2s;
     }
     .btn-copy:hover { border-color: var(--success); color: var(--success); }
     .btn-regen:hover { border-color: var(--primary); color: var(--primary); }
     .btn-copy.copied {
-      background: var(--success);
-      color: white;
-      border-color: var(--success);
+      background: var(--success); color: white; border-color: var(--success);
     }
     .result-body {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      word-break: break-word;
+      font-size: 0.9rem; line-height: 1.8;
+      white-space: pre-wrap; word-break: break-word;
+      outline: none; border-radius: 6px; padding: 0.5rem;
+      transition: background 0.2s;
+    }
+    .result-body:focus {
+      background: #f0f9ff;
+      box-shadow: inset 0 0 0 2px rgba(0,212,255,0.2);
+    }
+    .edit-hint {
+      font-size: 0.7rem; color: #9ca3af;
+      text-align: right; margin-top: 0.25rem;
     }
 
     /* Loading */
-    .loading-card {
-      text-align: center;
-      padding: 2rem;
-      color: var(--text-gray);
-    }
+    .loading-card { text-align: center; padding: 2rem; color: var(--text-gray); }
     .spinner {
       width: 36px; height: 36px;
-      border: 3px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      border: 3px solid var(--border); border-top-color: var(--primary);
+      border-radius: 50%; animation: spin 0.8s linear infinite;
       margin: 0 auto 0.75rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Toast */
     .toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
+      position: fixed; bottom: 2rem; left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: var(--bg-dark);
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-      box-shadow: var(--shadow-lg);
+      background: var(--bg-dark); color: white;
+      padding: 0.75rem 1.5rem; border-radius: 10px;
+      font-size: 0.85rem; z-index: 1000;
+      transition: transform 0.3s ease; box-shadow: var(--shadow-lg);
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
 
     /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem 1.5rem;
-      color: #9ca3af;
-      font-size: 0.8rem;
-    }
+    footer { text-align: center; padding: 2rem 1.5rem; color: #9ca3af; font-size: 0.8rem; }
     footer a { color: var(--primary); text-decoration: none; }
+
+    /* Agent info section */
+    .agent-info-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;
+    }
 
     /* Responsive */
     @media (max-width: 640px) {
       header h1 { font-size: 1.35rem; }
       .form-grid { grid-template-columns: 1fr; }
       .form-row-3 { grid-template-columns: 1fr 1fr 1fr; }
-      .platform-grid { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { grid-template-columns: repeat(3, 1fr); }
+      .tone-grid { grid-template-columns: repeat(2, 1fr); }
       .btn-row { flex-direction: column; }
       .btn-primary { width: 100%; }
-      .api-row { flex-direction: column; align-items: stretch; }
-      .api-row a { padding-bottom: 0; }
+      .agent-info-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -399,7 +310,6 @@
 
 <div class="container">
 
-  <!-- API Key (hidden, pre-configured) -->
   <input type="hidden" id="apiKey" value="AIzaSyBosBG4s5cYEYQm-7gGEH-oClQQ5tr0WPU" />
 
   <!-- Step 1: Photos -->
@@ -421,6 +331,21 @@
       <button class="btn-secondary" onclick="fillSample()" style="margin-left:auto; font-size:0.78rem;">填入範例</button>
     </div>
     <div class="form-grid">
+      <!-- 交易類型 + 語氣風格 -->
+      <div class="form-group">
+        <label>交易類型</label>
+        <div class="toggle-tabs">
+          <input type="radio" name="dealType" id="dealSale" value="售" checked>
+          <label for="dealSale">售屋</label>
+          <input type="radio" name="dealType" id="dealRent" value="租">
+          <label for="dealRent">租屋</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>開價（<span id="priceUnitLabel">萬元</span>）</label>
+        <input type="number" id="propPrice" placeholder="1580" />
+      </div>
+
       <div class="form-group full">
         <label>物件名稱</label>
         <input type="text" id="propName" placeholder="例：信義區全新裝潢景觀兩房" />
@@ -460,10 +385,22 @@
         <label>屋齡（年）</label>
         <input type="number" id="propAge" placeholder="8" />
       </div>
-      <div class="form-group full">
-        <label>開價（萬元）</label>
-        <input type="number" id="propPrice" placeholder="1580" />
+      <div class="form-group">
+        <label>管理費（元/月）</label>
+        <input type="number" id="propMgmt" placeholder="3500" />
       </div>
+      <div class="form-group">
+        <label>車位</label>
+        <select id="propParking">
+          <option value="">無</option>
+          <option value="坡道平面">坡道平面</option>
+          <option value="坡道機械">坡道機械</option>
+          <option value="機械式">機械式</option>
+          <option value="平面式">平面式</option>
+        </select>
+      </div>
+
+      <!-- 特色標籤 -->
       <div class="form-group full">
         <label>物件特色（可複選）</label>
         <div class="feature-tags" id="featureTags">
@@ -479,8 +416,22 @@
           <span class="feature-tag"><input type="checkbox" id="f10" value="近商圈"><label for="f10">近商圈</label></span>
           <span class="feature-tag"><input type="checkbox" id="f11" value="靜巷"><label for="f11">靜巷</label></span>
           <span class="feature-tag"><input type="checkbox" id="f12" value="管理佳"><label for="f12">管理佳</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f13" value="電梯"><label for="f13">電梯</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f14" value="近公園"><label for="f14">近公園</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f15" value="頂加"><label for="f15">頂加</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f16" value="前後陽台"><label for="f16">前後陽台</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f17" value="雙衛浴"><label for="f17">雙衛浴</label></span>
+          <span class="feature-tag"><input type="checkbox" id="f18" value="中庭花園"><label for="f18">中庭花園</label></span>
+          <!-- 鉤子標籤 -->
+          <div class="tag-section-title">行銷鉤子</div>
+          <span class="feature-tag hook"><input type="checkbox" id="h1" value="急售"><label for="h1">🔥 急售</label></span>
+          <span class="feature-tag hook"><input type="checkbox" id="h2" value="降價"><label for="h2">💰 降價</label></span>
+          <span class="feature-tag hook"><input type="checkbox" id="h3" value="稀有"><label for="h3">💎 稀有</label></span>
+          <span class="feature-tag hook"><input type="checkbox" id="h4" value="限時"><label for="h4">⏰ 限時</label></span>
+          <span class="feature-tag hook"><input type="checkbox" id="h5" value="獨家"><label for="h5">🏆 獨家</label></span>
         </div>
       </div>
+
       <div class="form-group full">
         <label>補充說明</label>
         <textarea id="propNotes" placeholder="其他想強調的賣點，例如：步行5分鐘到捷運、鄰近公園、剛換全新廚具..."></textarea>
@@ -488,13 +439,55 @@
     </div>
   </div>
 
-  <!-- Step 3: Platforms -->
+  <!-- Step 3: Tone -->
   <div class="card">
-    <div class="card-title"><span class="step-badge">3</span> 選擇生成平台</div>
+    <div class="card-title"><span class="step-badge">3</span> 文案語氣</div>
+    <div class="tone-grid">
+      <div class="tone-option">
+        <input type="radio" name="tone" id="toneWarm" value="溫馨親切" checked>
+        <label for="toneWarm"><span class="t-icon">🏡</span><span class="t-name">溫馨親切</span><span class="t-desc">首購族、小家庭</span></label>
+      </div>
+      <div class="tone-option">
+        <input type="radio" name="tone" id="toneLuxury" value="尊榮高端">
+        <label for="toneLuxury"><span class="t-icon">👑</span><span class="t-name">尊榮高端</span><span class="t-desc">豪宅、換屋族</span></label>
+      </div>
+      <div class="tone-option">
+        <input type="radio" name="tone" id="toneData" value="理性數據">
+        <label for="toneData"><span class="t-icon">📊</span><span class="t-name">理性數據</span><span class="t-desc">投資客、置產</span></label>
+      </div>
+      <div class="tone-option">
+        <input type="radio" name="tone" id="toneUrgent" value="urgency">
+        <label for="toneUrgent"><span class="t-icon">🔥</span><span class="t-name">急迫促銷</span><span class="t-desc">降價、急售</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4: Agent Info -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">4</span> 經紀人資訊（選填，自動帶入文案結尾）</div>
+    <div class="agent-info-grid">
+      <div class="form-group">
+        <label>姓名</label>
+        <input type="text" id="agentName" placeholder="王志偉" />
+      </div>
+      <div class="form-group">
+        <label>公司 / 品牌</label>
+        <input type="text" id="agentCompany" placeholder="信義房屋 信義店" />
+      </div>
+      <div class="form-group">
+        <label>電話</label>
+        <input type="tel" id="agentPhone" placeholder="0912-345-678" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5: Platforms -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">5</span> 選擇生成平台</div>
     <div class="platform-grid">
       <div class="platform-option">
         <input type="checkbox" id="p591" checked>
-        <label for="p591"><span class="p-icon">🏢</span><span class="p-name">591 售屋</span></label>
+        <label for="p591"><span class="p-icon">🏢</span><span class="p-name">591</span></label>
       </div>
       <div class="platform-option">
         <input type="checkbox" id="pFB" checked>
@@ -508,6 +501,10 @@
         <input type="checkbox" id="pLINE" checked>
         <label for="pLINE"><span class="p-icon">💬</span><span class="p-name">LINE</span></label>
       </div>
+      <div class="platform-option">
+        <input type="checkbox" id="pXHS" checked>
+        <label for="pXHS"><span class="p-icon">📕</span><span class="p-name">小紅書</span></label>
+      </div>
     </div>
   </div>
 
@@ -515,6 +512,7 @@
   <div class="card">
     <div class="btn-row">
       <button class="btn-primary" id="btnGenerate" onclick="generate()">生成文案</button>
+      <button class="btn-secondary" onclick="copyAll()">全部複製</button>
       <button class="btn-secondary" onclick="clearResults()">清除結果</button>
     </div>
   </div>
@@ -528,43 +526,36 @@
   Powered by Gemini AI ｜ Built by <a href="https://www.autolab.cloud" target="_blank">AutoLab 阿峰老師</a>
 </footer>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
 // ===== 全域變數 =====
-const uploadedImages = []; // { file, base64, type }
+const uploadedImages = [];
 
-// ===== 初始化 =====
-// API Key 已預設填入
+// ===== 交易類型切換 =====
+document.querySelectorAll('input[name="dealType"]').forEach(radio => {
+  radio.addEventListener('change', (e) => {
+    const isSale = e.target.value === '售';
+    document.getElementById('priceUnitLabel').textContent = isSale ? '萬元' : '元/月';
+    document.getElementById('propPrice').placeholder = isSale ? '1580' : '25000';
+  });
+});
 
 // ===== 照片上傳 =====
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
 
-uploadZone.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  uploadZone.classList.add('dragover');
-});
-uploadZone.addEventListener('dragleave', () => {
-  uploadZone.classList.remove('dragover');
-});
+uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
 uploadZone.addEventListener('drop', (e) => {
-  e.preventDefault();
-  uploadZone.classList.remove('dragover');
+  e.preventDefault(); uploadZone.classList.remove('dragover');
   handleFiles(e.dataTransfer.files);
 });
-fileInput.addEventListener('change', (e) => {
-  handleFiles(e.target.files);
-  fileInput.value = '';
-});
+fileInput.addEventListener('change', (e) => { handleFiles(e.target.files); fileInput.value = ''; });
 
 function handleFiles(files) {
   for (const file of files) {
-    if (uploadedImages.length >= 5) {
-      showToast('最多上傳 5 張照片');
-      break;
-    }
+    if (uploadedImages.length >= 5) { showToast('最多上傳 5 張照片'); break; }
     if (!file.type.startsWith('image/')) continue;
     resizeAndStore(file);
   }
@@ -575,22 +566,17 @@ function resizeAndStore(file) {
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      // 壓縮到最大 1024px
       const MAX = 1024;
       let w = img.width, h = img.height;
       if (w > MAX || h > MAX) {
         const ratio = Math.min(MAX / w, MAX / h);
-        w = Math.round(w * ratio);
-        h = Math.round(h * ratio);
+        w = Math.round(w * ratio); h = Math.round(h * ratio);
       }
       const canvas = document.createElement('canvas');
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, w, h);
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-      const base64 = dataUrl.split(',')[1];
-      uploadedImages.push({ base64, type: 'image/jpeg', preview: dataUrl });
+      uploadedImages.push({ base64: dataUrl.split(',')[1], type: 'image/jpeg', preview: dataUrl });
       renderPreviews();
     };
     img.src = e.target.result;
@@ -599,22 +585,19 @@ function resizeAndStore(file) {
 }
 
 function renderPreviews() {
-  const container = document.getElementById('photoPreviews');
-  container.innerHTML = uploadedImages.map((img, i) => `
+  document.getElementById('photoPreviews').innerHTML = uploadedImages.map((img, i) => `
     <div class="photo-preview">
       <img src="${img.preview}" alt="照片 ${i + 1}">
       <button class="remove-btn" onclick="removePhoto(${i})">✕</button>
     </div>
   `).join('');
 }
-
-function removePhoto(index) {
-  uploadedImages.splice(index, 1);
-  renderPreviews();
-}
+function removePhoto(i) { uploadedImages.splice(i, 1); renderPreviews(); }
 
 // ===== 填入範例 =====
 function fillSample() {
+  document.getElementById('dealSale').checked = true;
+  document.getElementById('priceUnitLabel').textContent = '萬元';
   document.getElementById('propName').value = '信義區全新裝潢景觀兩房';
   document.getElementById('propAddr').value = '台北市信義區松仁路 88 號';
   document.getElementById('propType').value = '大樓';
@@ -625,15 +608,20 @@ function fillSample() {
   document.getElementById('propFloor').value = '12F / 24F';
   document.getElementById('propAge').value = '8';
   document.getElementById('propPrice').value = '1580';
+  document.getElementById('propMgmt').value = '3500';
+  document.getElementById('propParking').value = '坡道平面';
   document.getElementById('propNotes').value = '步行5分鐘到捷運象山站，鄰近信義商圈，客廳落地窗可看101夜景，剛完成全屋裝潢含全新廚具家電';
-  ['f1','f3','f4','f9','f10','f12'].forEach(id => {
-    document.getElementById(id).checked = true;
-  });
+  ['f1','f3','f4','f9','f10','f12','f13'].forEach(id => document.getElementById(id).checked = true);
+  document.getElementById('toneWarm').checked = true;
+  document.getElementById('agentName').value = '王志偉';
+  document.getElementById('agentCompany').value = '信義房屋 信義店';
+  document.getElementById('agentPhone').value = '0912-345-678';
   showToast('已填入範例資料');
 }
 
-// ===== 組裝物件資訊文字 =====
+// ===== 組裝物件資訊 =====
 function getPropertyInfo() {
+  const dealType = document.querySelector('input[name="dealType"]:checked').value;
   const name = document.getElementById('propName').value.trim();
   const addr = document.getElementById('propAddr').value.trim();
   const type = document.getElementById('propType').value;
@@ -644,14 +632,14 @@ function getPropertyInfo() {
   const floor = document.getElementById('propFloor').value.trim();
   const age = document.getElementById('propAge').value;
   const price = document.getElementById('propPrice').value;
+  const mgmt = document.getElementById('propMgmt').value;
+  const parking = document.getElementById('propParking').value;
   const notes = document.getElementById('propNotes').value.trim();
 
   const features = [];
-  document.querySelectorAll('#featureTags input:checked').forEach(cb => {
-    features.push(cb.value);
-  });
+  document.querySelectorAll('#featureTags input:checked').forEach(cb => features.push(cb.value));
 
-  let info = '';
+  let info = `交易類型：${dealType}屋\n`;
   if (name) info += `物件名稱：${name}\n`;
   if (addr) info += `地址：${addr}\n`;
   info += `類型：${type}\n`;
@@ -659,71 +647,131 @@ function getPropertyInfo() {
   if (rooms || living || bath) info += `格局：${rooms || '?'}房${living || '?'}廳${bath || '?'}衛\n`;
   if (floor) info += `樓層：${floor}\n`;
   if (age) info += `屋齡：${age} 年\n`;
-  if (price) info += `開價：${price} 萬元\n`;
+  if (price) {
+    const unit = dealType === '售' ? '萬元' : '元/月';
+    info += `開價：${price} ${unit}\n`;
+  }
+  if (mgmt) info += `管理費：${mgmt} 元/月\n`;
+  if (parking) info += `車位：${parking}\n`;
   if (features.length) info += `特色：${features.join('、')}\n`;
   if (notes) info += `補充：${notes}\n`;
   return info;
 }
 
+function getAgentSuffix() {
+  const name = document.getElementById('agentName').value.trim();
+  const company = document.getElementById('agentCompany').value.trim();
+  const phone = document.getElementById('agentPhone').value.trim();
+  if (!name && !company && !phone) return '';
+  let s = '\n\n---\n';
+  if (company) s += `${company}\n`;
+  if (name) s += `經紀人：${name}\n`;
+  if (phone) s += `聯絡電話：${phone}`;
+  return s;
+}
+
+function getTone() {
+  return document.querySelector('input[name="tone"]:checked').value;
+}
+
+function getDealType() {
+  return document.querySelector('input[name="dealType"]:checked').value;
+}
+
+// ===== 語氣描述 =====
+function toneInstruction() {
+  const tone = getTone();
+  const map = {
+    '溫馨親切': '語氣溫暖親切，像朋友介紹好房子，用字貼近生活，適合首購族和小家庭',
+    '尊榮高端': '語氣高端大器，強調品味與生活質感，用精緻的詞彙，適合豪宅和換屋客群',
+    '理性數據': '語氣理性專業，強調投報率、增值性、區域行情數據，適合投資客和置產族',
+    'urgency': '語氣緊迫有力，強調機會難得、限時、降價，製造緊迫感促成行動'
+  };
+  return map[tone] || map['溫馨親切'];
+}
+
 // ===== 各平台 Prompt =====
 const platformConfig = {
   '591': {
-    id: 'p591',
-    icon: '🏢',
-    name: '591 售屋網',
-    prompt: `你是一位台灣資深房仲，擅長撰寫 591 售屋網的物件文案。
+    id: 'p591', icon: '🏢', name: '591 售屋網',
+    getPrompt: () => {
+      const dt = getDealType();
+      return `你是一位台灣資深房仲，擅長撰寫 591 ${dt}屋網的物件文案。
 根據以下房屋資訊和照片，撰寫一份專業的 591 物件描述。
 
-要求：
+語氣要求：${toneInstruction()}
+
+格式要求：
 1. 先寫一個 20 字以內的吸引人標題
 2. 正文 300-500 字，包含：生活機能、格局優勢、裝潢狀況、社區管理
-3. 條列重點規格
-4. 語氣專業、詳實
-5. 結尾加上「歡迎來電預約看屋」
-6. 使用繁體中文、台灣用語`
+3. 條列重點規格（坪數、格局、樓層、車位、管理費等）
+4. 結尾加上歡迎預約看${dt === '租' ? '房' : '屋'}
+5. 使用繁體中文、台灣用語`;
+    }
   },
   'FB': {
-    id: 'pFB',
-    icon: '📘',
-    name: 'Facebook 貼文',
-    prompt: `你是一位房仲社群行銷專家。根據以下房屋資訊和照片，撰寫一篇 Facebook 貼文。
+    id: 'pFB', icon: '📘', name: 'Facebook 貼文',
+    getPrompt: () => {
+      return `你是一位房仲社群行銷專家。根據以下房屋資訊和照片，撰寫一篇 Facebook 貼文。
 
-要求：
-1. 用 emoji 開頭，前兩行就要吸引目光（FB 會摺疊）
+語氣要求：${toneInstruction()}
+
+格式要求：
+1. 用 emoji 開頭，前兩行就要吸引目光（FB 會摺疊長文）
 2. 條列 3-5 個賣點
 3. 加入 5-8 個 hashtag
 4. 結尾放行動呼籲（私訊、留言+1、來電）
 5. 字數 150-250 字
-6. 語氣親切有溫度，像朋友推薦好房
-7. 使用繁體中文、台灣用語`
+6. 使用繁體中文、台灣用語`;
+    }
   },
   'IG': {
-    id: 'pIG',
-    icon: '📸',
-    name: 'Instagram 貼文',
-    prompt: `你是一位房仲 Instagram 行銷專家。根據以下房屋資訊和照片，撰寫 IG 貼文。
+    id: 'pIG', icon: '📸', name: 'Instagram 貼文',
+    getPrompt: () => {
+      return `你是一位房仲 Instagram 行銷專家。根據以下房屋資訊和照片，撰寫 IG 貼文。
 
-要求：
+語氣要求：${toneInstruction()}
+
+格式要求：
 1. 簡短有力的正文（80-120 字）
-2. 適當使用 emoji，換行清楚
-3. 正文後面加 15-20 個 hashtag，包含 #房仲 #買房 #[區域] 等
-4. 語氣年輕有活力
-5. 使用繁體中文、台灣用語`
+2. 適當使用 emoji，換行清楚好閱讀
+3. 正文後面加 15-20 個 hashtag，包含 #房仲 #買房 #[區域] #[物件特色] 等
+4. 語氣有活力，適合年輕受眾
+5. 使用繁體中文、台灣用語`;
+    }
   },
   'LINE': {
-    id: 'pLINE',
-    icon: '💬',
-    name: 'LINE 訊息',
-    prompt: `你是一位房仲 LINE 行銷專家。根據以下房屋資訊和照片，撰寫一則可以群發給客戶的 LINE 訊息。
+    id: 'pLINE', icon: '💬', name: 'LINE 訊息',
+    getPrompt: () => {
+      return `你是一位房仲 LINE 行銷專家。根據以下房屋資訊和照片，撰寫一則可以群發給客戶的 LINE 訊息。
 
-要求：
+語氣要求：${toneInstruction()}
+
+格式要求：
 1. 開頭簡短問候
 2. 3-4 個物件亮點
 3. 附上基本規格（坪數、格局、價格）
 4. 結尾邀約看屋
 5. 字數 100-150 字
-6. 語氣像私人推薦，專業但親切
-7. 使用繁體中文、台灣用語`
+6. 語氣像私人推薦
+7. 使用繁體中文、台灣用語`;
+    }
+  },
+  'XHS': {
+    id: 'pXHS', icon: '📕', name: '小紅書',
+    getPrompt: () => {
+      return `你是一位房仲小紅書行銷專家。根據以下房屋資訊和照片，撰寫一篇小紅書風格的看房筆記。
+
+語氣要求：${toneInstruction()}
+
+格式要求：
+1. 標題要吸睛，用小紅書常見格式（例如：「住進去就不想出門！信義區神仙兩房開箱」）
+2. 正文 150-250 字，用口語化的體驗分享風格
+3. 多用 emoji 分段，每段 1-2 句
+4. 強調「生活感」— 住在這裡的日常是什麼樣子
+5. 結尾加 10-15 個 tag，用 # 格式
+6. 使用繁體中文、台灣用語（但可以帶一點小紅書的語感）`;
+    }
   }
 };
 
@@ -733,21 +781,18 @@ async function callGemini(propertyInfo, platform) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   const parts = [];
-
-  // 加入照片
   for (const img of uploadedImages) {
-    parts.push({
-      inline_data: {
-        mime_type: img.type,
-        data: img.base64
-      }
-    });
+    parts.push({ inline_data: { mime_type: img.type, data: img.base64 } });
   }
 
-  // 加入文字 prompt
   const config = platformConfig[platform];
+  const agentSuffix = getAgentSuffix();
+  const agentNote = agentSuffix
+    ? `\n\n【經紀人簽名檔】\n在文案最後加上以下經紀人資訊：${agentSuffix}`
+    : '';
+
   parts.push({
-    text: `${config.prompt}\n\n【物件資訊】\n${propertyInfo}`
+    text: `${config.getPrompt()}\n\n【物件資訊】\n${propertyInfo}${agentNote}`
   });
 
   const response = await fetch(url, {
@@ -755,10 +800,7 @@ async function callGemini(propertyInfo, platform) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ parts }],
-      generationConfig: {
-        temperature: 0.8,
-        maxOutputTokens: 1024
-      }
+      generationConfig: { temperature: 0.8, maxOutputTokens: 1024 }
     })
   });
 
@@ -776,46 +818,30 @@ async function callGemini(propertyInfo, platform) {
 
 // ===== 生成文案 =====
 async function generate() {
-  const apiKey = document.getElementById('apiKey').value.trim();
-
-  // 檢查至少填了物件名稱或地址
   const propName = document.getElementById('propName').value.trim();
   const propAddr = document.getElementById('propAddr').value.trim();
-  if (!propName && !propAddr) {
-    showToast('請至少填寫物件名稱或地址');
-    return;
-  }
+  if (!propName && !propAddr) { showToast('請至少填寫物件名稱或地址'); return; }
 
-  // 取得選中的平台
-  const selectedPlatforms = Object.keys(platformConfig).filter(key => {
-    return document.getElementById(platformConfig[key].id).checked;
-  });
-  if (selectedPlatforms.length === 0) {
-    showToast('請至少選擇一個平台');
-    return;
-  }
+  const selected = Object.keys(platformConfig).filter(k =>
+    document.getElementById(platformConfig[k].id).checked
+  );
+  if (!selected.length) { showToast('請至少選擇一個平台'); return; }
 
   const propertyInfo = getPropertyInfo();
   const resultsDiv = document.getElementById('results');
   const btn = document.getElementById('btnGenerate');
-  btn.disabled = true;
-  btn.textContent = '生成中...';
+  btn.disabled = true; btn.textContent = '生成中...';
 
-  // 顯示 loading
-  resultsDiv.innerHTML = selectedPlatforms.map(p => `
+  resultsDiv.innerHTML = selected.map(p => `
     <div class="result-card" id="result-${p}">
       <div class="result-header">
         <h3>${platformConfig[p].icon} ${platformConfig[p].name}</h3>
       </div>
-      <div class="loading-card">
-        <div class="spinner"></div>
-        <div>AI 正在撰寫文案...</div>
-      </div>
+      <div class="loading-card"><div class="spinner"></div><div>AI 正在撰寫文案...</div></div>
     </div>
   `).join('');
 
-  // 逐一生成（避免同時太多 API 呼叫）
-  for (const platform of selectedPlatforms) {
+  for (const platform of selected) {
     try {
       const text = await callGemini(propertyInfo, platform);
       renderResult(platform, text);
@@ -824,26 +850,37 @@ async function generate() {
     }
   }
 
-  btn.disabled = false;
-  btn.textContent = '生成文案';
+  btn.disabled = false; btn.textContent = '生成文案';
   showToast('文案生成完成！');
 }
 
-// ===== 顯示結果 =====
+// ===== 顯示結果（可編輯 + 字數統計） =====
 function renderResult(platform, text) {
   const config = platformConfig[platform];
   const card = document.getElementById(`result-${platform}`);
   if (!card) return;
+  const wordCount = text.replace(/\s/g, '').length;
   card.innerHTML = `
     <div class="result-header">
       <h3>${config.icon} ${config.name}</h3>
       <div class="result-actions">
+        <span class="word-count" id="wc-${platform}">${wordCount} 字</span>
         <button class="btn-copy" onclick="copyText(this, '${platform}')">複製</button>
         <button class="btn-regen" onclick="regenerate('${platform}')">重新生成</button>
       </div>
     </div>
-    <div class="result-body" id="text-${platform}">${escapeHtml(text)}</div>
+    <div class="result-body" id="text-${platform}" contenteditable="true"
+         oninput="updateWordCount('${platform}')">${escapeHtml(text)}</div>
+    <div class="edit-hint">點擊文案可直接編輯</div>
   `;
+}
+
+function updateWordCount(platform) {
+  const el = document.getElementById(`text-${platform}`);
+  const wc = document.getElementById(`wc-${platform}`);
+  if (el && wc) {
+    wc.textContent = el.textContent.replace(/\s/g, '').length + ' 字';
+  }
 }
 
 function renderError(platform, message) {
@@ -861,49 +898,41 @@ function renderError(platform, message) {
   `;
 }
 
-// ===== 複製文案 =====
+// ===== 複製 =====
 function copyText(btn, platform) {
-  const textEl = document.getElementById(`text-${platform}`);
-  if (!textEl) return;
-  navigator.clipboard.writeText(textEl.textContent).then(() => {
-    btn.textContent = '已複製！';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = '複製';
-      btn.classList.remove('copied');
-    }, 2000);
+  const el = document.getElementById(`text-${platform}`);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent).then(() => {
+    btn.textContent = '已複製！'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '複製'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
-// ===== 重新生成單一平台 =====
-async function regenerate(platform) {
-  const apiKey = document.getElementById('apiKey').value.trim();
-  if (!apiKey) return;
+function copyAll() {
+  const blocks = document.querySelectorAll('.result-body');
+  if (!blocks.length) { showToast('尚未生成文案'); return; }
+  const allText = Array.from(blocks).map((el, i) => {
+    const header = el.closest('.result-card').querySelector('h3');
+    return `【${header ? header.textContent.trim() : '平台 ' + (i+1)}】\n${el.textContent}`;
+  }).join('\n\n' + '='.repeat(40) + '\n\n');
+  navigator.clipboard.writeText(allText).then(() => showToast('已複製全部文案！'));
+}
 
+// ===== 重新生成 =====
+async function regenerate(platform) {
   const card = document.getElementById(`result-${platform}`);
   const config = platformConfig[platform];
   card.innerHTML = `
-    <div class="result-header">
-      <h3>${config.icon} ${config.name}</h3>
-    </div>
-    <div class="loading-card">
-      <div class="spinner"></div>
-      <div>重新生成中...</div>
-    </div>
+    <div class="result-header"><h3>${config.icon} ${config.name}</h3></div>
+    <div class="loading-card"><div class="spinner"></div><div>重新生成中...</div></div>
   `;
-
   try {
     const text = await callGemini(getPropertyInfo(), platform);
     renderResult(platform, text);
-  } catch (err) {
-    renderError(platform, err.message);
-  }
+  } catch (err) { renderError(platform, err.message); }
 }
 
-// ===== 清除結果 =====
-function clearResults() {
-  document.getElementById('results').innerHTML = '';
-}
+function clearResults() { document.getElementById('results').innerHTML = ''; }
 
 // ===== 工具函數 =====
 function escapeHtml(text) {
@@ -911,14 +940,11 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 }
-
 function showToast(msg) {
   const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
+  toast.textContent = msg; toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
 </script>
-
 </body>
 </html>
